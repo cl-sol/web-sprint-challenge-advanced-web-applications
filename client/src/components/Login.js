@@ -6,7 +6,7 @@ const Login = () => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
 
-  const [credentials, setcredentials] = useState({
+  const [credentials, setCredentials] = useState({
     id: "",
     username: "",
     password: ""
@@ -16,7 +16,7 @@ const Login = () => {
 
   const handleChanges = e => {
     e.persist();
-    setcredentials({...credentials, [e.target.name]: e.target.value})
+    setCredentials({...credentials, [e.target.name]: e.target.value})
   };
 
   const handleSubmit = e => {
@@ -25,7 +25,7 @@ const Login = () => {
       .post("/api/login", credentials)
       .then(res => {
         console.log(res);
-        localStorage.setItem("token", JSON.stringify(res.data.payload));
+        localStorage.setItem("token", res.data.payload);
         history.push("/bubble-page");
       })
       .catch(err => console.log(err))
