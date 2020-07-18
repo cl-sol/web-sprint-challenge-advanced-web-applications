@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 const Login = () => {
   // make a post request to retrieve a token from the api
@@ -14,15 +14,15 @@ const Login = () => {
 
   const history = useHistory();
 
-  function handleChanges(e) {
+  const handleChanges = e => {
     e.persist();
     setcredentials({...credentials, [e.target.name]: e.target.value})
   };
 
-  function handleSubmit(e) {
+  const handleSubmit = e => {
     e.preventDefault();
-    return axios
-      .post("http://localhost:5000/api/login", credentials)
+    axiosWithAuth()
+      .post("/api/login", credentials)
       .then(res => {
         console.log(res);
         localStorage.setItem("token", JSON.stringify(res.data.payload));
@@ -31,11 +31,10 @@ const Login = () => {
       .catch(err => console.log(err))
   };
 
-
   return (
     <>
       <h1>Welcome to the Bubble App!</h1>
-      <form className="login-form" onSubmit={handleSubmit}>
+      <form className="login-form">
         <input
           type="text"
           name="username"
@@ -48,7 +47,7 @@ const Login = () => {
           value={credentials.password}
           onChange={handleChanges}
         />
-        <button className="login-button">Log In</button>
+        <button className="login-button" onClick={handleSubmit}>Log In</button>
       </form>
     </>
   );
