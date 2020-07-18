@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
@@ -10,6 +11,8 @@ const Login = () => {
     username: "",
     password: ""
   })
+
+  const history = useHistory();
 
   function handleChanges(e) {
     e.persist();
@@ -23,6 +26,7 @@ const Login = () => {
       .then(res => {
         console.log(res);
         localStorage.setItem("token", JSON.stringify(res.data.payload));
+        history.push("/bubble-page");
       })
       .catch(err => console.log(err))
   };
