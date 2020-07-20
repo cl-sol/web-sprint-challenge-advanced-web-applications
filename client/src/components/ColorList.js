@@ -24,7 +24,7 @@ const ColorList = ({ colors, updateColors }) => {
     // where is is saved right now?
 
     axiosWithAuth()
-      .put(`/colors/${colorToEdit.id}`, colorToEdit)
+      .put(`/api/colors/${colorToEdit.id}`, colorToEdit)
       .then(res => {
         updateColors([...colors.filter(color => color.id !== colorToEdit.id), res.data]);
         setEditing(false);
